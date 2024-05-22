@@ -1,7 +1,9 @@
 package com.dowglasmaia.hexagonal.config;
 
+import com.dowglasmaia.hexagonal.application.core.usecase.FindCustomerByCpfUseCase;
 import com.dowglasmaia.hexagonal.application.core.usecase.InsertCustomerUseCase;
 import com.dowglasmaia.hexagonal.application.ports.out.FindAddressByZipCodeOutputPort;
+import com.dowglasmaia.hexagonal.application.ports.out.FindCustomerByCpfOutputPort;
 import com.dowglasmaia.hexagonal.application.ports.out.InsertCustomerOutputPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +15,16 @@ public class CustomerUseCaseConfig {
     public InsertCustomerUseCase insertCustomerUseCase(
           FindAddressByZipCodeOutputPort findAddressByZipCode,
           InsertCustomerOutputPort insertCustomer
-    ) {
+    ){
         return new InsertCustomerUseCase(findAddressByZipCode, insertCustomer);
     }
+
+    @Bean
+    public FindCustomerByCpfUseCase findCustomerByCpfUseCase(
+          FindCustomerByCpfOutputPort findCustomerByCpfOutputPort
+    ){
+        return new FindCustomerByCpfUseCase(findCustomerByCpfOutputPort);
+    }
+
 
 }

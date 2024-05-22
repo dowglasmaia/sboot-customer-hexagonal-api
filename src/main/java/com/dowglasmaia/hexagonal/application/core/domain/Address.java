@@ -1,27 +1,18 @@
 package com.dowglasmaia.hexagonal.application.core.domain;
 
 public class Address {
-    private String id;
+
     private String street;
     private String city;
     private String state;
 
-    public Address(String id, String street, String city, String state){
-        this.id = id;
+    public Address(String street, String city, String state){
         this.street = street;
         this.city = city;
         this.state = state;
     }
 
     public Address(){
-    }
-
-    public String getId(){
-        return id;
-    }
-
-    public void setId(String id){
-        this.id = id;
     }
 
     public String getStreet(){
