@@ -1,16 +1,65 @@
 spring:
+  jackson:
+    default-property-inclusion: NON_NULL
   application:
-    name: hexagonal-api
+    name: customer-service-api
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       authentication-database: admin
       username: root
       password: example
       database: hexagonal
 
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    enable:
+      jvm: true
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: 'customer-service-api'
+    distribution:
+      slo:
+        http: '5ms,10ms,25ms,50ms,100ms,200ms,300ms,400ms,500ms,1s,2s'
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
+
 maia:
   client:
     address:
-      url: http://localhost:8088/api/v1/addresses/find-by-zipcode
+      url: http://address-api:8088/api/v1/addresses/find-by-zipcode
+
+server:
+  port: 8009
+
+
+info:
+  app:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      version: '@java.version@'
+
+logging:
+  file:
+    name: logs/customer-service-api.log
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
