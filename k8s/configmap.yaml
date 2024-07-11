@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  POSTGRES_USER: "maia"
+  POSTGRES_PASSWORD: "maiapw"
+  POSTGRES_DB: "skill"
