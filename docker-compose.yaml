@@ -72,6 +72,19 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  mongodb-exporter:
+    image: fabricioveronez/mongo_exporter
+    container_name: mongodb-exporter
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017
+    ports:
+      - "9216:9216"
+    depends_on:
+      - mongo
+    networks:
+      - api
+
+
   collector-api:
     image: otel/opentelemetry-collector:latest
     container_name: collector-api
@@ -94,6 +107,33 @@ services:
     depends_on:
       - collector-api
 
+  prometheus-server:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    #  - prometheus_data:/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - api
+    depends_on:
+      - api-customer
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - api
+    depends_on:
+      - prometheus-server
+
+
 
 networks:
   api:
@@ -101,3 +141,5 @@ networks:
 
 volumes:
   mongo_data:
+  prometheus_data:
+  grafana-storage:

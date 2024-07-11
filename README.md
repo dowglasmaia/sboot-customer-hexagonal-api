@@ -16,7 +16,11 @@ These are some of the technologies and tools that I work with:
 ---
 
 ## Hexagonal Architecture
-<img src="./img/hexagonal-img.webp" alt="Circuit Breaker " width="860" height="600">
+<img src="./img/hexagonal-img.webp" alt="Circuit Breaker " width="1200" height="600">
+
+---
+
+<img src="img/Ports_Adapters.png" alt="Circuit Breaker " width="1200" height="600">
 
 ### 🚀 Overview
 The Customer API is built using the hexagonal architecture and provides a RESTful interface for managing customer data. The API is equipped to capture traces using OpenTelemetry and Jaeger and integrates with an external address API via Spring Feign Client to fetch customer addresses. It supports the following operations:
